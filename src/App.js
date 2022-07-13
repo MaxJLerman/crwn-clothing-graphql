@@ -1,18 +1,8 @@
-import { Routes, Route, Outlet } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
+import Navigation from './routes/navigation/navigation.component';
 import Home from './routes/home/home.component';
-
-const Navigation = () =>
-{
-    return(
-        <div>
-            <div>
-                <h1>Navbar</h1>
-            </div>
-            <Outlet />
-        </div>
-    );
-}
+import SignIn from './routes/sign-in/sign-in.component';
 
 const Shop = () =>
 {
@@ -32,6 +22,7 @@ const App = () =>
             <Route path='/' element={<Navigation />} >
                 <Route index element={<Home />} /> {/* including "index" makes it so the Home component shows when the path is just '/' */}
                 <Route path='shop' element={<Shop />} />
+                <Route path='sign-in' element={<SignIn />} />
             </Route>
         </Routes>
     );
