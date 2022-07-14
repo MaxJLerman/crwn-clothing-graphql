@@ -18,27 +18,23 @@ const firebaseConfig = {
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 
-const provider = new GoogleAuthProvider();
-provider.setCustomParameters(
+const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters(
     {
         prompt: "select_account"
     }
 );
 
-export const auth = getAuth();
-export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
+export const authentication = getAuth();
+export const signInWithGooglePopup = () => signInWithPopup(authentication, googleProvider);
+export const signInWithGoogleRedirect = () => signInWithRedirect(authentication, googleProvider);
 
 export const database = getFirestore();
 
 export const createUserDocumentFromAuthentication = async (userAuthentication) => 
 {
     const userDocumentReference = doc(database, 'users', userAuthentication.uid)
-
-    console.log(userDocumentReference);
-
     const userSnapshot = await getDoc(userDocumentReference);
-    console.log(userSnapshot);
-    console.log(userSnapshot.exists());
 
     if (!userSnapshot.exists())
     {
@@ -55,4 +51,6 @@ export const createUserDocumentFromAuthentication = async (userAuthentication) =
             console.log("error creating the user", error.message);
         }
     }
+
+    return userDocumentReference;
 };
