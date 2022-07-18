@@ -6,7 +6,7 @@
 import SignUpForm from '../../components/sign-up-form/sign-up-form.component';
 import { /* authentication, */ signInWithGooglePopup, /* signInWithGoogleRedirect, */ createUserProfileDocument } from '../../utils/firebase/firebase.utils';
 
-const SignIn = () => 
+const Authentication = () => 
 {
     /* #region useEffect */
     
@@ -59,4 +59,4 @@ const SignIn = () =>
     );
 }
 
-export default SignIn;
+export default Authentication;
