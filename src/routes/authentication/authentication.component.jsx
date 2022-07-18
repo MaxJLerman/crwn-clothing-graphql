@@ -4,7 +4,9 @@
 //import { getRedirectResult } from 'firebase/auth';
 
 import SignUpForm from '../../components/sign-up-form/sign-up-form.component';
+import SignInForm from '../../components/sign-in-form/sign-in-form.component';
 import { /* authentication, */ signInWithGooglePopup, /* signInWithGoogleRedirect, */ createUserProfileDocument } from '../../utils/firebase/firebase.utils';
+import './authentication.styles.scss'
 
 const Authentication = () => 
 {
@@ -27,25 +29,11 @@ const Authentication = () =>
 
     /* #endregion */
     
-    const logGoogleUser = async () =>
-    {
-        try
-        {        
-            const response = await signInWithGooglePopup();
-
-            const userDocumentReference = await createUserProfileDocument(response.user);
-        }
-
-        catch (error)
-        { console.log("couldn't sign user in with google", error.message); }
-    };
+    
     
     return(
-        <div>
-            <h1>Sign in</h1>
-            <button onClick={logGoogleUser}>
-                sign in with google popup
-            </button>
+        <div className="authentication-container">
+            <SignInForm />
             <SignUpForm />
 
             { 
