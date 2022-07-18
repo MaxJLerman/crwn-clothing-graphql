@@ -1,25 +1,43 @@
-import { useEffect } from 'react';
-import { getRedirectResult } from 'firebase/auth';
+// commented out code in this file was used to highlight some of firebase's methods & authentication
 
-import { authentication, signInWithGooglePopup, signInWithGoogleRedirect, createUserDocumentFromAuthentication } from '../../utils/firebase/firebase.utils';
+//import { useEffect } from 'react';
+//import { getRedirectResult } from 'firebase/auth';
+
+import SignUpForm from '../../components/sign-up-form/sign-up-form.component';
+import { /* authentication, */ signInWithGooglePopup, /* signInWithGoogleRedirect, */ createUserProfileDocument } from '../../utils/firebase/firebase.utils';
 
 const SignIn = () => 
 {
-    useEffect( () =>
-    {
-        async function fetchData()
-        {
-            const response = await getRedirectResult(authentication);
-            console.log(response);
-        }
+    /* #region useEffect */
+    
+    // useEffect( () =>
+    // {
+    //     async function fetchData()
+    //     {
+    //         const response = await getRedirectResult(authentication);
+            
+    //         if (response)
+    //         {
+    //             const userDocumentReference = await createUserDocumentFromAuthentication(response.user);
+    //         }
+    //     }
 
-        fetchData(); // needs to be called
-    }, []);
+    //     fetchData(); // needs to be called
+    // }, []);
+
+    /* #endregion */
     
     const logGoogleUser = async () =>
     {
-        const { user } = await signInWithGooglePopup();
-        const userDocumentReference = await createUserDocumentFromAuthentication(user);
+        try
+        {        
+            const response = await signInWithGooglePopup();
+
+            const userDocumentReference = await createUserProfileDocument(response.user);
+        }
+
+        catch (error)
+        { console.log("couldn't sign user in with google", error.message); }
     };
     
     return(
@@ -28,9 +46,15 @@ const SignIn = () =>
             <button onClick={logGoogleUser}>
                 sign in with google popup
             </button>
-            <button onClick={signInWithGoogleRedirect}>
-                sign in with google redirect
-            </button>
+            <SignUpForm />
+
+            { 
+                /* #region google redirect */
+            // <button onClick={signInWithGoogleRedirect}>
+            //     sign in with google redirect
+            // </button>
+            /* #endregion */
+            }
         </div>
     );
 }
