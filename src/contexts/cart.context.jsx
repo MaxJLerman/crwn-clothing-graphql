@@ -26,7 +26,7 @@ const removeCartItem = (cartItems, cartItemToRemove) =>
     // check if quantity of cartItemToRemove is 1, if so return new array with cartItemToRemove filtered out
     if (existingCartItem.quantity === 1)
     {
-        return cartItems.filter(cartItem => cartItem.id !== cartItemToRemove.id) // this filter() command keeps the cartItems with IDs that don't match the ID of the cartItemToRemove
+        return cartItems.filter(cartItem => cartItem.id !== cartItemToRemove.id); // this filter() command keeps the cartItems with IDs that don't match the ID of the cartItemToRemove
     }
 
     // if existingCartItem has a quantity > 1, returns a new array with all existing cart items, plus the cart item of matching ID with a decremented quantity
@@ -36,6 +36,8 @@ const removeCartItem = (cartItems, cartItemToRemove) =>
     );
 }
 
+const clearCartItem = (cartItems, cartItemToClear) => cartItems.filter(cartItem => cartItem.id !== cartItemToClear.id);
+
 export const CartContext = createContext(
     {
         isCartOpen: false,
@@ -43,6 +45,7 @@ export const CartContext = createContext(
         cartItems: [],
         addItemToCart: () => {},
         removeItemFromCart: () => {},
+        clearItemFromCart: () => {},
         cartCount: 0
     }
 );
@@ -58,12 +61,16 @@ export const CartProvider = ({ children }) =>
         const newCartCount = cartItems.reduce((total, cartItem) => total + cartItem.quantity, 0);
         setCartCount(newCartCount);
     }, [cartItems]) // cartItems in the dependency array means useEffect runs whever the cartItems array changes
+
+    const toggleIsCartOpen = () => setIsCartOpen(!isCartOpen); // toggles the isCartOpen variable by setting it to the inverse of its current value
     
     const addItemToCart = (productToAdd) => setCartItems(addCartItem(cartItems, productToAdd));
 
     const removeItemFromCart = (cartItemToRemove) => setCartItems(removeCartItem(cartItems, cartItemToRemove));
+
+    const clearItemFromCart = (cartItemToClear) => setCartItems(clearCartItem(cartItems, cartItemToClear));
     
-    const value = { isCartOpen, setIsCartOpen, addItemToCart, removeItemFromCart, cartItems, cartCount };
+    const value = { isCartOpen, setIsCartOpen, toggleIsCartOpen, addItemToCart, removeItemFromCart, clearItemFromCart, cartItems, cartCount };
 
     return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }

@@ -6,10 +6,8 @@ import './cart-icon.styles.scss';
 
 const CartIcon = () =>
 {
-    const { isCartOpen, setIsCartOpen, cartCount } = useContext(CartContext);
+    const { isCartOpen, setIsCartOpen, toggleIsCartOpen, cartCount } = useContext(CartContext);
 
-    const toggleIsCartOpen = () => setIsCartOpen(!isCartOpen); // toggles the isCartOpen variable by setting it to the inverse of its current value
-    
     return(
         <div className="cart-icon-container" onClick={toggleIsCartOpen}>
             <ShoppingIcon className="shopping-icon" />
