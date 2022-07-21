@@ -62,6 +62,7 @@ export const CartProvider = ({ children }) =>
         setCartCount(newCartCount);
     }, [cartItems]) // cartItems in the dependency array means useEffect runs whever the cartItems array changes
 
+    // moved the toggle function to the CartContext to gain access elsewhere in project
     const toggleIsCartOpen = () => setIsCartOpen(!isCartOpen); // toggles the isCartOpen variable by setting it to the inverse of its current value
     
     const addItemToCart = (productToAdd) => setCartItems(addCartItem(cartItems, productToAdd));
