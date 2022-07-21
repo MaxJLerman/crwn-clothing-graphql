@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth, /*signInWithRedirect, */ signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+import { getFirestore, doc, getDoc, setDoc, collection, writeBatch } from "firebase/firestore";
 
 import { SELECT_ACCOUNT, USERS } from "../../constants/constants";
 import { API_KEY, AUTH_DOMAIN, PROJECT_ID, STORAGE_BUCKET, MESSAGING_SENDER_ID, APP_ID } from "../../constants/firebaseConfig";
@@ -34,12 +34,26 @@ export const signInWithGooglePopup = () => signInWithPopup(authentication, googl
 
 export const database = getFirestore();
 
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd, field) =>
+{
+    const collectionReference = collection(database, collectionKey);
+    const batch = writeBatch(database);
+
+    objectsToAdd.forEach((object) =>
+    {
+        const documentReference = doc(collectionReference, object[field].toLowerCase());
+        batch.set(documentReference, object);
+    });
+
+    await batch.commit();
+    console.log("done");
+}
+
 export const createUserProfileDocument = async (userAuthentication, additionalInformation = {}) => 
 {
     if (!userAuthentication)
     {
         alert("fail");
-
         return;
     } // force quits if user cannot be authenticated
 
@@ -57,8 +71,6 @@ export const createUserProfileDocument = async (userAuthentication, additionalIn
         catch (error)
         { console.log("error creating the user", error.message); }
     }
-
-    //alert("success");
     
     return userDocumentReference;
 };
