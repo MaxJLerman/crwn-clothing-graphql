@@ -12,7 +12,7 @@ const App = () =>
         <Routes>
             <Route path='/' element={<Navigation />} >
                 <Route index element={<Home />} /> {/* including "index" makes it so the Home component shows when the path is just '/' */}
-                <Route path='shop' element={<Shop />} />
+                <Route path='shop/*' element={<Shop />} /> {/* the path suffix of /* means anything after the shop component is rendered in the shop and then the further routing is done inside the shop component */}
                 <Route path='authentication' element={<Authentication />} />
                 <Route path="checkout" element={<Checkout />} />
             </Route>
