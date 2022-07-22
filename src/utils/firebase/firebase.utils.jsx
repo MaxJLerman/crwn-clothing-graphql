@@ -1,9 +1,9 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth, /*signInWithRedirect, */ signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
-import { getFirestore, doc, getDoc, setDoc, collection, writeBatch } from "firebase/firestore";
+import { getFirestore, doc, getDoc, setDoc, collection, writeBatch, query, getDocs } from "firebase/firestore";
 
-import { SELECT_ACCOUNT, USERS } from "../../constants/constants";
+import { CATEGORIES, SELECT_ACCOUNT, USERS } from "../../constants/constants";
 import { API_KEY, AUTH_DOMAIN, PROJECT_ID, STORAGE_BUCKET, MESSAGING_SENDER_ID, APP_ID } from "../../constants/firebaseConfig";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -21,6 +21,7 @@ const firebaseConfig =
 };
 
 // Initialize Firebase
+// eslint-disable-next-line no-unused-vars
 const firebaseApp = initializeApp(firebaseConfig);
 
 const googleProvider = new GoogleAuthProvider();
@@ -47,6 +48,23 @@ export const addCollectionAndDocuments = async (collectionKey, objectsToAdd, fie
 
     await batch.commit();
     console.log("done");
+}
+
+export const getCategoriesAndDocuments = async () =>
+{
+    const collectionReference = collection(database, CATEGORIES);
+    const q = query(collectionReference);
+
+    const querySnapshot = await getDocs(q);
+    const categoryMap = querySnapshot.docs.reduce((accumulator, documentSnapshot) =>
+    {
+        const { title, items } = documentSnapshot.data();
+
+        accumulator[title.toLowerCase()] = items;
+        return accumulator;
+    }, {});
+
+    return categoryMap;
 }
 
 export const createUserProfileDocument = async (userAuthentication, additionalInformation = {}) => 
