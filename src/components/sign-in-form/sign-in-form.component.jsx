@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 
 import { signInWithGooglePopup, createUserProfileDocument, signInAuthenticatedUserWithEmailAndPassword } from '../../utils/firebase/firebase.utils';
 import FormInput from '../form-input/form-input.component';
@@ -37,8 +37,7 @@ const SignInForm = () =>
 
         try
         {
-            const response = await signInAuthenticatedUserWithEmailAndPassword(email, password);
-
+            await signInAuthenticatedUserWithEmailAndPassword(email, password);
             resetFormFields();
         }
 
