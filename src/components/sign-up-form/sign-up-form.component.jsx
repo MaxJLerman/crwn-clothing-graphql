@@ -2,9 +2,10 @@ import { useContext, useState } from 'react';
 
 import { createAuthenticatedUserWithEmailAndPassword, createUserProfileDocument } from '../../utils/firebase/firebase.utils';
 import FormInput from '../form-input/form-input.component';
-import Button from '../button/button.component';
+import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
 import { UserContext } from '../../contexts/user.context';
-import './sign-up-form.styles.scss';
+
+import { SignUpContainer } from './sign-up-form.styles.jsx';
 
 const defaultFormFields = 
 {
@@ -20,10 +21,7 @@ const SignUpForm = () =>
     const { displayName, email, password, confirmPassword } = formFields;
     const { setCurrentUser } = useContext(UserContext);
 
-    //console.log(formFields);
-
-    const resetFormFields = () =>
-    { setFormFields(defaultFormFields); };
+    const resetFormFields = () => setFormFields(defaultFormFields);
 
     const handleSubmit = async (event) =>
     {
@@ -42,7 +40,6 @@ const SignUpForm = () =>
             await createUserProfileDocument(response.user, { displayName });
 
             resetFormFields();
-            //setCurrentUser(response.user);
         }
 
         catch (error)
@@ -63,18 +60,17 @@ const SignUpForm = () =>
     }
     
     return(
-        <div className="sign-up-container">
+        <SignUpContainer>
             <h2>Don't have an account?</h2>
             <span>Sign up with your email and password</span>
             <form onSubmit={handleSubmit}>
-                <FormInput label="Display Name" name="displayName" type="text" placeholder="Display Name" onChange={handleChange} value={displayName} required />
-                <FormInput label="Email" name="email" type="email" placeholder="Email" onChange={handleChange} value={email} required />
-                <FormInput label="Password" name="password" type="password" placeholder="Password" onChange={handleChange} value={password} required />
-                <FormInput label="Confirm Password" name="confirmPassword" type="password" placeholder="Confirm Password" onChange={handleChange} value={confirmPassword} required />
-
-                <Button buttonType="" type="submit">Sign Up</Button>
+                <FormInput label="Display Name" name="displayName" type="text" onChange={handleChange} value={displayName} required />
+                <FormInput label="Email" name="email" type="email" onChange={handleChange} value={email} required />
+                <FormInput label="Password" name="password" type="password" onChange={handleChange} value={password} required />
+                <FormInput label="Confirm Password" name="confirmPassword" type="password" onChange={handleChange} value={confirmPassword} required />
+                <Button buttonType={BUTTON_TYPE_CLASSES.default} type="submit">Sign Up</Button>
             </form>
-        </div>
+        </SignUpContainer>
     );
 }
 

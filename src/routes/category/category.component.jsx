@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom'
 
 import { CategoriesContext } from '../../contexts/categories.context';
 import ProductCard from '../../components/product-card/product-card.component';
-import './category.styles.scss';
+
+import { CategoryContainer, Title } from './category.styles.jsx';
 
 const Category = () =>
 {
@@ -11,20 +12,20 @@ const Category = () =>
     const { categoriesMap } = useContext(CategoriesContext);
     const [products, setProducts] = useState(categoriesMap[category]);
 
-    useEffect(() =>
+    useEffect(() => 
     {
         setProducts(categoriesMap[category]);
     }, [category, categoriesMap]);
 
     return(
         <Fragment>
-            <h2 className="category-title">{category.toUpperCase()}</h2>
-            <div className="category-container">
+            <Title>{category.toUpperCase()}</Title>
+            <CategoryContainer>
                 {
                     // only renders the products onto the screen if products has a value
                     products && products.map((product) => <ProductCard key={product.id} product={product} />)
                 }
-            </div>
+            </CategoryContainer>
         </Fragment>
     );
 }

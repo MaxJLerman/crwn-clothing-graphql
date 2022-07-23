@@ -1,12 +1,13 @@
-// commented out code in this file was used to highlight some of firebase's methods & authentication
+// the code commented out in this file was used to highlight some of firebase's methods & authentication
 
 //import { useEffect } from 'react';
 //import { getRedirectResult } from 'firebase/auth';
 
 import SignUpForm from '../../components/sign-up-form/sign-up-form.component';
 import SignInForm from '../../components/sign-in-form/sign-in-form.component';
-import { /* authentication, */ signInWithGooglePopup, /* signInWithGoogleRedirect, */ createUserProfileDocument } from '../../utils/firebase/firebase.utils';
-import './authentication.styles.scss'
+// import { authentication, signInWithGoogleRedirect } from '../../utils/firebase/firebase.utils';
+
+import { AuthenticationContainer } from './authentication.styles.jsx';
 
 const Authentication = () => 
 {
@@ -32,18 +33,18 @@ const Authentication = () =>
     
     
     return(
-        <div className="authentication-container">
+        <AuthenticationContainer>
             <SignInForm />
             <SignUpForm />
 
-            { 
+            {
                 /* #region google redirect */
-            // <button onClick={signInWithGoogleRedirect}>
-            //     sign in with google redirect
-            // </button>
-            /* #endregion */
+                // <button onClick={signInWithGoogleRedirect}>
+                //     sign in with google redirect
+                // </button>
+                /* #endregion */
             }
-        </div>
+        </AuthenticationContainer>
     );
 }
 
