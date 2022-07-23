@@ -5,7 +5,7 @@ import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
 import CartItem from '../cart-item/cart-item.component';
 import { CartContext } from '../../contexts/cart.context';
 
-import { CartDropdownContainer, EmptyMessage, CartItems } from './cart-dropdown.styles.jsx';
+import { CartDropdownContainer, EmptyMessage, CartItems } from './cart-dropdown.styles';
 
 const CartDropdown = () =>
 {

@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
 import { CartContext } from '../../contexts/cart.context';
 
-import { ProductCardContaier, Footer, NameSpan, PriceSpan } from './product-card.styles.jsx';
+import { ProductCardContaier, Footer, NameSpan, PriceSpan } from './product-card.styles';
 
 const ProductCard = ({ product }) =>
 {
