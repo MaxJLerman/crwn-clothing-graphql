@@ -11,8 +11,7 @@ import { AuthenticationContainer } from './authentication.styles';
 
 const Authentication = () => 
 {
-    /* #region useEffect */
-    
+    // unused useEffect
     // useEffect( () =>
     // {
     //     async function fetchData()
@@ -27,8 +26,6 @@ const Authentication = () =>
 
     //     fetchData(); // needs to be called
     // }, []);
-
-    /* #endregion */
     
     
     
@@ -38,7 +35,7 @@ const Authentication = () =>
             <SignUpForm />
 
             {
-                /* #region google redirect */
+                /* #region unused google redirect */
                 // <button onClick={signInWithGoogleRedirect}>
                 //     sign in with google redirect
                 // </button>

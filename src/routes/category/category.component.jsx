@@ -15,7 +15,7 @@ const Category = () =>
     useEffect(() => 
     {
         setProducts(categoriesMap[category]);
-    }, [category, categoriesMap]);
+    }, [category, categoriesMap]); // category & categoriesMap in the dependency array means useEffect runs whenever the either the category or categoriesMap elements change
 
     return(
         <Fragment>
