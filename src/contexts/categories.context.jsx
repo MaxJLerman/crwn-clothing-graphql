@@ -1,6 +1,6 @@
 import { useState, createContext, useEffect } from 'react';
 
-import { getCategoriesAndDocuments } from '../utils/firebase/firebase.utils.js';
+import { getCategoriesAndDocuments } from '../utils/firebase/firebase.utils.jsx';
 // import { CATEGORIES, TITLE } from '../constants/constants.js';
 // import SHOP_DATA from '../shop-data.js';
 
