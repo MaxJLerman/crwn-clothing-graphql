@@ -10,8 +10,7 @@ import { API_KEY, AUTH_DOMAIN, PROJECT_ID, STORAGE_BUCKET, MESSAGING_SENDER_ID, 
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
-const firebaseConfig =
-{
+const firebaseConfig = {
   apiKey: API_KEY,
   authDomain: AUTH_DOMAIN,
   projectId: PROJECT_ID,
@@ -26,7 +25,7 @@ const firebaseApp = initializeApp(firebaseConfig);
 
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ 
-    prompt: SELECT_ACCOUNT, 
+  prompt: SELECT_ACCOUNT, 
 });
 
 export const authentication = getAuth();
@@ -35,78 +34,73 @@ export const signInWithGooglePopup = () => signInWithPopup(authentication, googl
 
 export const database = getFirestore();
 
-export const addCollectionAndDocuments = async (collectionKey, objectsToAdd, field) =>
-{
-    const collectionReference = collection(database, collectionKey);
-    const batch = writeBatch(database);
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd, field) => {
+  const collectionReference = collection(database, collectionKey);
+  const batch = writeBatch(database);
 
-    objectsToAdd.forEach((object) =>
-    {
-        const documentReference = doc(collectionReference, object[field].toLowerCase());
-        batch.set(documentReference, object);
-    });
+  objectsToAdd.forEach((object) => {
+    const documentReference = doc(collectionReference, object[field].toLowerCase());
+    batch.set(documentReference, object);
+  });
 
-    await batch.commit();
-    console.log("done");
-}
+  await batch.commit();
+  console.log("done");
+};
 
-export const getCategoriesAndDocuments = async () =>
-{
-    const collectionReference = collection(database, CATEGORIES);
-    const q = query(collectionReference);
+export const getCategoriesAndDocuments = async () => {
+  const collectionReference = collection(database, CATEGORIES);
+  const q = query(collectionReference);
 
-    const querySnapshot = await getDocs(q);
-    const categoryMap = querySnapshot.docs.reduce((accumulator, documentSnapshot) =>
-    {
-        const { title, items } = documentSnapshot.data();
+  const querySnapshot = await getDocs(q);
+  const categoryMap = querySnapshot.docs.reduce((accumulator, documentSnapshot) => {
+    const { title, items } = documentSnapshot.data();
 
-        accumulator[title.toLowerCase()] = items;
-        return accumulator;
-    }, {});
+    accumulator[title.toLowerCase()] = items;
+    return accumulator;
+  }, {});
 
-    return categoryMap;
-}
+  return categoryMap;
+};
 
-export const createUserProfileDocument = async (userAuthentication, additionalInformation = {}) => 
-{
-    if (!userAuthentication)
-    {
-        alert("fail");
-        return;
-    } // force quits if user cannot be authenticated
+export const createUserProfileDocument = async (userAuthentication, additionalInformation = {}) => {
+  if (!userAuthentication) {
+    alert("fail");
+    return;
+  } // force quits if user cannot be authenticated
 
-    const userDocumentReference = doc(database, USERS, userAuthentication.uid)
-    const userSnapshot = await getDoc(userDocumentReference);
+  const userDocumentReference = doc(database, USERS, userAuthentication.uid)
+  const userSnapshot = await getDoc(userDocumentReference);
+  
+  if (!userSnapshot.exists()) {
+    const { displayName, email } = userAuthentication;
+    const createdAt = new Date();
     
-    if (!userSnapshot.exists())
-    {
-        const { displayName, email } = userAuthentication;
-        const createdAt = new Date();
-        
-        try
-        { await setDoc(userDocumentReference, { displayName, email, createdAt, ...additionalInformation }); }
-        
-        catch (error)
-        { console.log("error creating the user", error.message); }
+    try { 
+      await setDoc(userDocumentReference, { displayName, email, createdAt, ...additionalInformation });
     }
     
-    return userDocumentReference;
+    catch (error) { 
+      console.log("error creating the user", error.message); 
+    }
+  };
+  
+  return userDocumentReference;
 };
 
-export const createAuthenticatedUserWithEmailAndPassword = async (email, password) =>
-{
-    if (!email || !password)
-    { return; }
+export const createAuthenticatedUserWithEmailAndPassword = async (email, password) => {
+  if (!email || !password) {
+    return;
+  };
 
-    return await createUserWithEmailAndPassword(authentication, email, password);
+  return await createUserWithEmailAndPassword(authentication, email, password);
 };
 
-export const signInAuthenticatedUserWithEmailAndPassword = async (email, password) =>
-{
-    if (!email || !password)
-    { return; }
+export const signInAuthenticatedUserWithEmailAndPassword = async (email, password) => {
+  if (!email || !password) {
+    return;
+  };
 
-    return await signInWithEmailAndPassword(authentication, email, password);
+  return await signInWithEmailAndPassword(authentication, email, password);
 };
 
 export const signOutUser = async () => await signOut(authentication);

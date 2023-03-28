@@ -9,40 +9,39 @@ import SignInForm from '../../components/sign-in-form/sign-in-form.component';
 
 import { AuthenticationContainer } from './authentication.styles';
 
-const Authentication = () => 
-{
-    // unused useEffect
-    // useEffect( () =>
-    // {
-    //     async function fetchData()
-    //     {
-    //         const response = await getRedirectResult(authentication);
-            
-    //         if (response)
-    //         {
-    //             const userDocumentReference = await createUserDocumentFromAuthentication(response.user);
-    //         }
-    //     }
+const Authentication = () => {
+  // unused useEffect
+  // useEffect( () =>
+  // {
+  //     async function fetchData()
+  //     {
+  //         const response = await getRedirectResult(authentication);
+          
+  //         if (response)
+  //         {
+  //             const userDocumentReference = await createUserDocumentFromAuthentication(response.user);
+  //         }
+  //     }
 
-    //     fetchData(); // needs to be called
-    // }, []);
+  //     fetchData(); // needs to be called
+  // }, []);
     
     
     
-    return(
-        <AuthenticationContainer>
-            <SignInForm />
-            <SignUpForm />
+  return (
+    <AuthenticationContainer>
+      <SignInForm />
+      <SignUpForm />
 
-            {
-                /* #region unused google redirect */
-                // <button onClick={signInWithGoogleRedirect}>
-                //     sign in with google redirect
-                // </button>
-                /* #endregion */
-            }
-        </AuthenticationContainer>
-    );
-}
+      {
+        /* #region unused google redirect */
+        // <button onClick={signInWithGoogleRedirect}>
+        //     sign in with google redirect
+        // </button>
+        /* #endregion */
+      }
+    </AuthenticationContainer>
+  );
+};
 
 export default Authentication;

@@ -7,7 +7,7 @@ import Shop from './routes/shop/shop.component';
 import Checkout from './routes/checkout/checkout.component';
 
 const App = () => {
-  return(
+  return (
     <Routes>
       <Route path='/' element={<Navigation />} >
         <Route index element={<Home />} /> {/* including "index" makes it so the Home component shows when the path is just '/' */}
