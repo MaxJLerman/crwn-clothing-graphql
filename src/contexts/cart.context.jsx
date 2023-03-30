@@ -1,6 +1,6 @@
 import { createContext, useReducer } from 'react';
 
-import { SET_CART_ITEMS, SET_IS_CART_OPEN } from '../constants/cartActionTypes';
+import { SET_CART_ITEMS, SET_IS_CART_OPEN } from '../store/cart/cart.types';
 
 import { createAction } from '../utils/reducer/reducer.utils';
 
@@ -58,7 +58,7 @@ const INITIAL_STATE = {
 const cartReducer = (state, action) => {
   const { type, payload } = action;  
 
-  switch(type) {
+  switch (type) {
     case SET_CART_ITEMS:
       return {
           ...state,

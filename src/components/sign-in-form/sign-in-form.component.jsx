@@ -37,7 +37,7 @@ const SignInForm = () => {
     }
 
     catch (error) {
-      switch(error.code) {
+      switch (error.code) {
         case "auth/wrong-password":
           alert("Incorrect password");
           break;

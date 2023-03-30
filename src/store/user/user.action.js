@@ -1,4 +1,4 @@
 import { createAction } from "../../utils/reducer/reducer.utils";
-import { SET_CURRENT_USER } from "../../constants/userActionTypes";
+import * as t from "./user.types";
 
-export const setCurrentUser = (user) => createAction(SET_CURRENT_USER, user);
+export const setCurrentUser = (user) => createAction(t.SET_CURRENT_USER, user);

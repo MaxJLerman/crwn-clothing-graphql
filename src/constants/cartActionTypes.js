@@ -1,2 +1,0 @@
-export const SET_CART_ITEMS = "SET_CART_ITEMS";
-export const SET_IS_CART_OPEN = "SET_IS_CART_OPEN";

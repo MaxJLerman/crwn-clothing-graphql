@@ -1,4 +1,4 @@
 import { createAction } from "../../utils/reducer/reducer.utils";
-import { SET_CATEGORIES } from "../../constants/categoryActionTypes";
+import * as t from "./category.types";
 
-export const setCategories = (categoriesArray) => createAction(SET_CATEGORIES, categoriesArray);
+export const setCategories = (categoriesArray) => createAction(t.SET_CATEGORIES, categoriesArray);
