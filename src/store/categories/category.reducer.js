@@ -2,16 +2,25 @@ import * as t from "./category.types";
 
 const CATEGORIES_INITIAL_STATE = {
   categories: [],
+  isLoading: false,
+  error: null,
 };
 
 export const categoriesReducer = (state = CATEGORIES_INITIAL_STATE, action = {}) => {
   const { type, payload } = action;
 
   switch (type) {
-    case t.SET_CATEGORIES:
+    case t.FETCH_CATEGORIES_START:
       return {
         ...state,
-        categories: payload
+        isLoading: true
+      };
+
+    case t.FETCH_CATEGORIES_SUCCESS:
+      return {
+        ...state,
+        categories: payload,
+        isLoading: false
       };
 
     default:
