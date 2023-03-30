@@ -7,8 +7,8 @@ const selectCategoryReducer = (state) => {
 // memoized selector
 export const selectCategories = createSelector(
   [selectCategoryReducer], // input selector(s) - what do I want [slices] as parameters to be used to produce what the output selector(s) should return back
-  (categoriesSlice) => categoriesSlice.categories // output selector(s) - output of input selector(s)
-); // function returns categories array that lives on the categories slice of the redux state
+  (categoriesSegment) => categoriesSegment.categories // output selector(s) - output of input selector(s)
+); // function returns categories array that lives on the categories segment of the redux state
    // function will only run when the selectCategoryReducer output changes, if not it will return previously calculated [cached] value
 
 export const selectCategoriesMap = createSelector(
