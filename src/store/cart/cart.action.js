@@ -34,7 +34,6 @@ const removeCartItem = (cartItems, cartItemToRemove) => {
 
 const clearCartItem = (cartItems, cartItemToClear) => cartItems.filter(cartItem => cartItem.id !== cartItemToClear.id);
 
-export const setIsCartOpen = (boolean) => createAction(t.SET_IS_CART_OPEN, boolean);
 
 export const addItemToCart = (cartItems, productToAdd) => {
   const newCartItems = addCartItem(cartItems, productToAdd);
@@ -51,8 +50,4 @@ export const clearItemFromCart = (cartItems, cartItemToClear) => {
   return createAction(t.SET_CART_ITEMS, newCartItems);
 };
 
-const setIsCartOpen = (boolean) => {
-  dispatch(
-    createAction(SET_IS_CART_OPEN, boolean)
-  );
-};
+export const setIsCartOpen = (boolean) => createAction(t.SET_IS_CART_OPEN, boolean);
