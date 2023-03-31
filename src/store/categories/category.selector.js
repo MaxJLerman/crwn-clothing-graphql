@@ -20,3 +20,8 @@ export const selectCategoriesMap = createSelector(
   }, {})
 ); // as long as categoriesArray does not change, the above method will not re-run
    // previously calculated value will be returned, which is much faster than re-reducing the array in runtime
+
+export const selectCategoriesIsLoading = createSelector(
+  [selectCategoryReducer],
+  (categoriesSegment) => categoriesSegment.isLoading
+);
