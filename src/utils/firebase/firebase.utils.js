@@ -100,3 +100,16 @@ export const signInAuthenticatedUserWithEmailAndPassword = async (email, passwor
 export const signOutUser = async () => await signOut(authentication);
 
 export const onAuthStateChangedListener = (callback) => onAuthStateChanged(authentication, callback);
+
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => { // resolve == positive handle case, reject == negative handle case
+    const unsubscribe = onAuthStateChanged(
+      authentication,
+      (userAuthentication) => {
+        unsubscribe(); // must immediately unsubscribe or risk a memory leak
+        resolve(userAuthentication);
+      },
+      reject
+    );
+  });
+};
