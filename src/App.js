@@ -7,14 +7,13 @@ import Home from './routes/home/home.component';
 import Authentication from './routes/authentication/authentication.component';
 import Shop from './routes/shop/shop.component';
 import Checkout from './routes/checkout/checkout.component';
-import { onAuthStateChangedListener, createUserProfileDocument, getCurrentUser } from './utils/firebase/firebase.utils';
-import { setCurrentUser } from './store/user/user.action';
+import { checkUserSession } from './store/user/user.action';
 
 const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getCurrentUser();
+    dispatch(checkUserSession());
   }, [dispatch]);
   // dispatch not needed inside dependency array because it never changes
   // written inside the array because React doesn't know that dispatch variable is being pulled from a hook

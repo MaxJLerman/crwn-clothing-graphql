@@ -78,7 +78,7 @@ export const createUserProfileDocument = async (userAuthentication, additionalIn
     }
   };
   
-  return userDocumentReference;
+  return userSnapshot;
 };
 
 export const createAuthenticatedUserWithEmailAndPassword = async (email, password) => {
