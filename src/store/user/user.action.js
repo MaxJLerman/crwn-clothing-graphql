@@ -10,3 +10,6 @@ export const signInFailed = (error) => createAction(t.SIGN_IN_FAILED, error);
 export const signUpStart = (email, password, displayName) => createAction(t.SIGN_UP_START, { email, password, displayName });
 export const signUpSuccess = (user, additionalInformation) => createAction(t.SIGN_UP_SUCCESS, { user, additionalInformation });
 export const signUpFailed = (error) => createAction(t.SIGN_UP_FAILED, error);
+export const signOutStart = () => createAction(t.SIGN_OUT_START);
+export const signOutSuccess = () => createAction(t.SIGN_OUT_SUCCESS);
+export const signOutFailed = (error) => createAction(t.SIGN_OUT_FAILED, error);
