@@ -3,7 +3,8 @@ import { useDispatch } from 'react-redux';
 
 import { signUpStart } from '../../store/user/user.action';
 import FormInput from '../form-input/form-input.component';
-import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
+import Button from '../button/button.component';
+import * as t from "../button/button.types";
 import { SignUpContainer } from './sign-up-form.styles';
 
 const defaultFormFields = {
@@ -58,7 +59,7 @@ const SignUpForm = () => {
         <FormInput label="Email" name="email" type="email" onChange={handleChange} value={email} required />
         <FormInput label="Password" name="password" type="password" onChange={handleChange} value={password} required />
         <FormInput label="Confirm Password" name="confirmPassword" type="password" onChange={handleChange} value={confirmPassword} required />
-        <Button buttonType={BUTTON_TYPE_CLASSES.default} type="submit">Sign Up</Button>
+        <Button buttonType={t.DEFAULT_BUTTON} type="submit">Sign Up</Button>
       </form>
     </SignUpContainer>
   );
