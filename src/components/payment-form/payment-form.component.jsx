@@ -1,38 +1,50 @@
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 
-import Button from "../button/button.component";
+import { selectCartTotal } from "../../store/cart/cart.selector";
+import { selectCurrentUser } from "../../store/user/user.selector";
 import * as t from "../button/button.types";
-import { PaymentFormContainer, FormContainer } from "./payment-form.styles";
+import { PaymentFormContainer, FormContainer, PaymentButton } from "./payment-form.styles";
 
 const PaymentForm = () => {
   const stripe = useStripe();
   const elements = useElements();
+  const amount = useSelector(selectCartTotal);
+  const currentUser = useSelector(selectCurrentUser);
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   
   const paymentHandler = async (event) => {
     event.preventDefault();
 
     if (!stripe || !elements) return; // if no stripe or elements, go back
 
+    setIsProcessingPayment(true); // set to true here because if returned above, this line never gets reached
+
     const response = await fetch('/.netlify/functions/create-payment-intent', {
       method: 'post',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ amount: 10000 })
-    }).then(res => res.json());
+      body: JSON.stringify({ amount: amount * 100 }), // amount must NOT be 0 or server throws error 400
+    }).then((res) => {
+      return res.json();
+    });
+    
+    console.log(response);
 
     const clientSecret = response.paymentIntent.client_secret;
-
-    console.log(clientSecret);
 
     const paymentResult = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
         card: elements.getElement(CardElement),
         billing_details: {
-          name: 'Max Lerman'
-        }
-      }
+          name: currentUser ? currentUser.displayName : 'Guest',
+        },
+      },
     });
+
+    setIsProcessingPayment(false); // set back to false as payment is finished processing
 
     if (paymentResult.error) {
       alert(paymentResult.error);
@@ -50,7 +62,7 @@ const PaymentForm = () => {
       <FormContainer onSubmit={paymentHandler}>
         <h2>Credit Card Payment:</h2>
         <CardElement />
-        <Button buttonType={t.INVERTED_BUTTON}>Pay now</Button>
+        <PaymentButton isLoading={isProcessingPayment} buttonType={t.INVERTED_BUTTON}>Pay now</PaymentButton>
       </FormContainer>
     </PaymentFormContainer>
   );
