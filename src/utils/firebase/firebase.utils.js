@@ -1,35 +1,31 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth, /*signInWithRedirect, */ signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
+import { getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc, collection, writeBatch, query, getDocs } from "firebase/firestore";
 
 import { CATEGORIES, SELECT_ACCOUNT, USERS } from "../../constants/constants";
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
+// web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: process.env.API_KEY,
-  authDomain: process.env.AUTH_DOMAIN,
-  projectId: process.env.PROJECT_ID,
-  storageBucket: process.env.STORAGE_BUCKET,
-  messagingSenderId: process.env.MESSAGING_SENDER_ID,
-  appId: process.env.APP_ID
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID
 };
 
 // Initialize Firebase
-// eslint-disable-next-line no-unused-vars
 const firebaseApp = initializeApp(firebaseConfig);
 
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ 
-  prompt: SELECT_ACCOUNT, 
+  prompt: SELECT_ACCOUNT // whenever someone interacts with the googleProvider, they are forced to select an account
 });
 
 export const authentication = getAuth();
 export const signInWithGooglePopup = () => signInWithPopup(authentication, googleProvider);
-// export const signInWithGoogleRedirect = () => signInWithRedirect(authentication, googleProvider);
+export const signInWithGoogleRedirect = () => signInWithRedirect(authentication, googleProvider);
 
 export const database = getFirestore();
 
@@ -64,6 +60,7 @@ export const createUserProfileDocument = async (userAuthentication, additionalIn
   const userDocumentReference = doc(database, USERS, userAuthentication.uid)
   const userSnapshot = await getDoc(userDocumentReference);
   
+  // if the user doesn't exist, create a new one
   if (!userSnapshot.exists()) {
     const { displayName, email } = userAuthentication;
     const createdAt = new Date();

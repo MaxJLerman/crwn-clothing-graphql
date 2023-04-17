@@ -1,9 +1,7 @@
-const SHOP_DATA =
-[
+const SHOP_DATA = [
   {
     title: 'Hats',
-    items:
-    [
+    items: [
       {
         id: 1,
         name: 'Brown Brim',
@@ -62,8 +60,7 @@ const SHOP_DATA =
   },
   {
     title: 'Sneakers',
-    items:
-    [
+    items: [
       {
         id: 10,
         name: 'Adidas NMD',
@@ -116,8 +113,7 @@ const SHOP_DATA =
   },
   {
     title: 'Jackets',
-    items:
-    [
+    items: [
       {
         id: 18,
         name: 'Black Jean Shearling',
@@ -152,8 +148,7 @@ const SHOP_DATA =
   },
   {
     title: 'Womens',
-    items:
-    [
+    items: [
       {
         id: 23,
         name: 'Blue Tanktop',
@@ -200,8 +195,7 @@ const SHOP_DATA =
   },
   {
     title: 'Mens',
-    items:
-    [
+    items: [
       {
         id: 30,
         name: 'Camo Down Vest',

@@ -2,7 +2,8 @@ import { takeLatest, put, all, call } from "redux-saga/effects";
 
 import * as t from "./user.types";
 import { signInSuccess, signInFailed, signUpSuccess, signOutSuccess, signOutFailed } from "./user.action";
-import { getCurrentUser, createUserProfileDocument, signInWithGooglePopup, signInAuthenticatedUserWithEmailAndPassword, createAuthenticatedUserWithEmailAndPassword, signOutUser } from "../../utils/firebase/firebase.utils";
+import { getCurrentUser, createUserProfileDocument, signInWithGooglePopup, signInWithGoogleRedirect, signInAuthenticatedUserWithEmailAndPassword, createAuthenticatedUserWithEmailAndPassword, signOutUser } from "../../utils/firebase/firebase.utils";
+import { isPopupBlocked } from "../../utils/browser/browser.utils";
 
 export function* getSnapshotFromUserAuthentication(userAuthentication, additionalInformation) {
   try {
@@ -17,7 +18,7 @@ export function* getSnapshotFromUserAuthentication(userAuthentication, additiona
 
 export function* signInWithGoogle() {
   try {
-    const {user} = yield call(signInWithGooglePopup);
+    const {user} = yield call(isPopupBlocked ? signInWithGoogleRedirect : signInWithGooglePopup);
     yield call(getSnapshotFromUserAuthentication, user);
   }
 
