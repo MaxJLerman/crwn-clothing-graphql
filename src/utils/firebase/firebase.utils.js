@@ -43,9 +43,9 @@ export const addCollectionAndDocuments = async (collectionKey, objectsToAdd, fie
 
 export const getCategoriesAndDocuments = async () => {
   const collectionReference = collection(database, "categories");
-  const q = query(collectionReference);
+  const generatedQuery = query(collectionReference);
 
-  const querySnapshot = await getDocs(q);
+  const querySnapshot = await getDocs(generatedQuery);
   return querySnapshot.docs.map(documentSnapshot => documentSnapshot.data());
   // now returns the categories as an array
 };

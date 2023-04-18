@@ -32,8 +32,14 @@ const Checkout = () => {
       {
         cartItems.map((cartItem) => <CheckoutItem key={cartItem.id} cartItem={cartItem} />)
       }
-      <TotalSpan>Total: £{cartTotal}</TotalSpan>
-      <PaymentForm />
+      { // only show the total charge and payment form if the cart has 1 or more items in it
+        cartItems.length === 0 
+          ? null
+          : [
+              <PaymentForm />,
+              <TotalSpan>Total: £{cartTotal}</TotalSpan>
+          ]
+      }
     </CheckoutContainer>
   );
 };
