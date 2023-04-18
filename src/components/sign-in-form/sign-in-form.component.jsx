@@ -21,7 +21,7 @@ const SignInForm = () => {
   const resetFormFields = () => { setFormFields(defaultFormFields); };
 
   const signInWithGoogle = async () => {
-    try {        
+    try {
       dispatch(googleSignInStart());
     }
 

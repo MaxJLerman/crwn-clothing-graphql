@@ -18,7 +18,26 @@ export function* getSnapshotFromUserAuthentication(userAuthentication, additiona
 
 export function* signInWithGoogle() {
   try {
-    const {user} = yield call(isPopupBlocked ? signInWithGoogleRedirect : signInWithGooglePopup);
+    const bool = yield call(isPopupBlocked);
+    let result;
+
+    if (bool) {
+      result = yield call(signInWithGoogleRedirect);
+    }
+
+    else {
+      try {
+        result = yield call(signInWithGooglePopup);
+      }
+
+      catch (error) {
+        if (error.code === "auth/popup-closed-by-user") {
+          result = yield call(signInWithGoogleRedirect);
+        }
+      }
+    }
+
+    const {user} = result;
     yield call(getSnapshotFromUserAuthentication, user);
   }
 
