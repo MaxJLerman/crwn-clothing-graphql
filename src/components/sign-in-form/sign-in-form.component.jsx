@@ -68,6 +68,7 @@ const SignInForm = () => {
         <FormInput label="Password" name="password" type="password" onChange={handleChange} value={password} required />
         <ButtonsContainer>
           <Button type="submit" buttonType={t.DEFAULT_BUTTON} >Sign In</Button>
+          {/* Google button is not of type="submit" otherwise it tries to submit the form data used for signing in a user with email and password too */}
           <Button type="button" buttonType={t.GOOGLE_BUTTON} onClick={signInWithGoogle}>Google Sign In</Button>
         </ButtonsContainer>
       </form>
