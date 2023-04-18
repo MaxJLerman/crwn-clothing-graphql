@@ -3,8 +3,6 @@ import { initializeApp } from "firebase/app";
 import { getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc, collection, writeBatch, query, getDocs } from "firebase/firestore";
 
-import { CATEGORIES, SELECT_ACCOUNT, USERS } from "../../constants/constants";
-
 // web app's Firebase configuration
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -20,7 +18,7 @@ const firebaseApp = initializeApp(firebaseConfig);
 
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ 
-  prompt: SELECT_ACCOUNT // whenever someone interacts with the googleProvider, they are forced to select an account
+  prompt: "select_account" // whenever someone interacts with the googleProvider, they are forced to select an account
 });
 
 export const authentication = getAuth();
@@ -43,7 +41,7 @@ export const addCollectionAndDocuments = async (collectionKey, objectsToAdd, fie
 };
 
 export const getCategoriesAndDocuments = async () => {
-  const collectionReference = collection(database, CATEGORIES);
+  const collectionReference = collection(database, "categories");
   const q = query(collectionReference);
 
   const querySnapshot = await getDocs(q);
@@ -57,7 +55,7 @@ export const createUserProfileDocument = async (userAuthentication, additionalIn
     return;
   } // force quits if user cannot be authenticated
 
-  const userDocumentReference = doc(database, USERS, userAuthentication.uid)
+  const userDocumentReference = doc(database, "users", userAuthentication.uid)
   const userSnapshot = await getDoc(userDocumentReference);
   
   // if the user doesn't exist, create a new one

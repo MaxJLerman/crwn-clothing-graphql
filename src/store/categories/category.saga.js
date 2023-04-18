@@ -3,14 +3,13 @@ import { takeLatest, all, call, put } from "redux-saga/effects";
 import { getCategoriesAndDocuments } from "../../utils/firebase/firebase.utils";
 import { fetchCategoriesSuccess, fetchCategoriesFailed } from "./category.action";
 import * as t from "./category.types";
-import { CATEGORIES } from "../../constants/constants";
 
 // function* == generator function
 export function* fetchCategoriesAsync() {
   try {
     // call() method takes in 2 arguments: callable method as a variable & parameters
-    // i.e. call the getCategoriesAndDocuments() method and pass in the CATEGORIES string
-    const categoriesArray = yield call(getCategoriesAndDocuments, CATEGORIES); // yield ≈ await
+    // i.e. call the getCategoriesAndDocuments() method and pass in the "categories" string
+    const categoriesArray = yield call(getCategoriesAndDocuments, "categories"); // yield ≈ await
     yield put(fetchCategoriesSuccess(categoriesArray)); // put ≈ dispatch
   }
 
