@@ -27,8 +27,8 @@ const PaymentForm = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ amount: amount * 100 }), // amount must NOT be 0 or server throws error 400
-    }).then((res) => {
-      return res.json();
+    }).then((response) => {
+      return response.json();
     });
     
     console.log(response);
@@ -40,6 +40,8 @@ const PaymentForm = () => {
         card: elements.getElement(CardElement),
         billing_details: {
           name: currentUser ? currentUser.displayName : 'Guest',
+          // can have more than one billing details fields
+          // make sure to implement all the respective billing details fields in the payment form
         },
       },
     });
@@ -53,6 +55,8 @@ const PaymentForm = () => {
     else {
       if (paymentResult.paymentIntent.status === 'succeeded') {
         alert('Payment successful!');
+        // clear the form
+        // clear the cart
       }
     }
   };
