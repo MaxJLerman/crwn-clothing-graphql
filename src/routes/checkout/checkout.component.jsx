@@ -36,8 +36,8 @@ const Checkout = () => {
         cartItems.length === 0 
           ? null
           : [
-              <PaymentForm />,
-              <TotalSpan>Total: £{cartTotal}</TotalSpan>
+              <TotalSpan>Total: £{cartTotal}</TotalSpan>,
+              <PaymentForm />
           ]
       }
     </CheckoutContainer>
