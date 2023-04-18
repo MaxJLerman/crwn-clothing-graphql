@@ -4,10 +4,15 @@ import { Routes, Route } from 'react-router-dom';
 
 import CategoriesPreview from '../categories-preview/categories-preview.component';
 import Category from '../category/category.component';
-import { fetchCategoriesStart } from '../../store/categories/category.action'
+import { fetchCategoriesStart } from '../../store/categories/category.action';
 
 const Shop = () => {
   const dispatch = useDispatch();
+
+  // the following useEffect only needs to be run once per categories collection updating
+  // useEffect(() => {
+  //   addCollectionAndDocuments("categories", SHOP_DATA, "title");
+  // }, []);
   
   useEffect(() => {
     dispatch(fetchCategoriesStart());

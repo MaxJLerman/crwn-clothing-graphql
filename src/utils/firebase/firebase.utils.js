@@ -27,6 +27,7 @@ export const signInWithGoogleRedirect = () => signInWithRedirect(authentication,
 
 export const database = getFirestore();
 
+// function is asyncronous because data is being sent to an external source
 export const addCollectionAndDocuments = async (collectionKey, objectsToAdd, field) => {
   const collectionReference = collection(database, collectionKey);
   const batch = writeBatch(database);
@@ -37,7 +38,7 @@ export const addCollectionAndDocuments = async (collectionKey, objectsToAdd, fie
   });
 
   await batch.commit();
-  console.log("done");
+  console.log("categories added successfully");
 };
 
 export const getCategoriesAndDocuments = async () => {
