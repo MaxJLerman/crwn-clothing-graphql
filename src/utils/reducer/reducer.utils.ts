@@ -28,7 +28,7 @@ export function withMatcher(actionCreator: Function) {
     match(action: AnyAction) {
       return action.type === type;
     } // if matches, action: AnyAction => action: [return type of action creator]
-  });
+  }); // copy the values of all of the enumerable own properties from one or more source objects to a target object => returns the target object
 };
 
 
