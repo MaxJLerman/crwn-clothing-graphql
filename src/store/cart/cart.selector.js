@@ -6,21 +6,21 @@ const selectCartReducer = (state) => {
 
 export const selectCartItems = createSelector(
   [selectCartReducer],
-  (cartSegment) => cartSegment.cartItems
+  (cartSlice) => cartSlice.cartItems
 );
 
 export const selectIsCartOpen = createSelector(
   [selectCartReducer],
-  (cartSegment) => cartSegment.isCartOpen
+  (cartSlice) => cartSlice.isCartOpen
 );
 
 export const selectCartCount = createSelector(
   [selectCartItems],
-  (cartItemsSegment) => cartItemsSegment.reduce((total, cartItem) => total + cartItem.quantity, 0)
+  (cartItemsSlice) => cartItemsSlice.reduce((total, cartItem) => total + cartItem.quantity, 0)
 );
 
 
 export const selectCartTotal = createSelector(
   [selectCartItems],
-  (cartItemsSegment) => cartItemsSegment.reduce((total, cartItem) => total + (cartItem.quantity * cartItem.price), 0)
+  (cartItemsSlice) => cartItemsSlice.reduce((total, cartItem) => total + (cartItem.quantity * cartItem.price), 0)
 );
