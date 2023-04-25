@@ -5,9 +5,6 @@ export type FetchCategoriesStart = Action<CATEGORIES_ACTION_TYPES.FETCH_CATEGORI
 export type FetchCategoriesSuccess = ActionWithPayload<CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_SUCCESS, Category[]>;
 export type FetchCategoriesFailed = ActionWithPayload<CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_FAILED, Error>;
 
-// union of all category actions
-export type CategoryAction = FetchCategoriesStart | FetchCategoriesSuccess | FetchCategoriesFailed;
-
 // matchable action creators
 export const fetchCategoriesStart = withMatcher((): FetchCategoriesStart => {
   return createAction(CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_START);
