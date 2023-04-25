@@ -25,6 +25,6 @@ const Button: FC<ButtonProps> = ({ children, buttonType, isLoading, ...otherProp
       {isLoading ? <ButtonSpinner /> : children}
     </CustomButton>
   );
-}
+};
 
 export default Button;
