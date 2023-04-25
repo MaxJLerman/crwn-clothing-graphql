@@ -61,7 +61,7 @@ export const getCategoriesAndDocuments = async (): Promise<Category[]> => {
 };
 
 // want more additonal information? => add more to sign-up form
-type AdditionalInformation = {
+export type AdditionalInformation = {
   displayName?: string;
 };
 
