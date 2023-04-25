@@ -1,7 +1,8 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
-import { getFirestore, doc, getDoc, setDoc, collection, writeBatch, query, getDocs } from "firebase/firestore";
+import { getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, User, NextOrObserver } from "firebase/auth";
+import { getFirestore, doc, getDoc, setDoc, collection, writeBatch, query, getDocs, QueryDocumentSnapshot } from "firebase/firestore";
+
+import { Category } from "../../store/categories/category.types";
 
 // web app's Firebase configuration
 const firebaseConfig = {
@@ -13,7 +14,7 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_APP_ID
 };
 
-// Initialize Firebase
+// initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 
 const googleProvider = new GoogleAuthProvider();
@@ -27,13 +28,22 @@ export const signInWithGoogleRedirect = () => signInWithRedirect(authentication,
 
 export const database = getFirestore();
 
+// some random object (that I don't know yet) to add to the collection
+export type ObjectToAdd = {
+  title: string;
+};
+
 // function is asyncronous because data is being sent to an external source
-export const addCollectionAndDocuments = async (collectionKey, objectsToAdd, field) => {
+// must pass in objectToAdd as a(n array of) generic type(s) because the type is not known yet
+export const addCollectionAndDocuments = async <T extends ObjectToAdd>(
+  collectionKey: string,
+  objectsToAdd: T[],
+): Promise<void> => {
   const collectionReference = collection(database, collectionKey);
   const batch = writeBatch(database);
 
   objectsToAdd.forEach((object) => {
-    const documentReference = doc(collectionReference, object[field].toLowerCase());
+    const documentReference = doc(collectionReference, object.title.toLowerCase());
     batch.set(documentReference, object);
   });
 
@@ -41,16 +51,30 @@ export const addCollectionAndDocuments = async (collectionKey, objectsToAdd, fie
   console.log("categories added successfully");
 };
 
-export const getCategoriesAndDocuments = async () => {
+export const getCategoriesAndDocuments = async (): Promise<Category[]> => {
   const collectionReference = collection(database, "categories");
   const generatedQuery = query(collectionReference);
 
   const querySnapshot = await getDocs(generatedQuery);
-  return querySnapshot.docs.map(documentSnapshot => documentSnapshot.data());
+  return querySnapshot.docs.map(documentSnapshot => documentSnapshot.data() as Category); // interfacing with 3rd party API so casting is allowed
   // now returns the categories as an array
 };
 
-export const createUserProfileDocument = async (userAuthentication, additionalInformation = {}) => {
+// want more additonal information? => add more to sign-up form
+type AdditionalInformation = {
+  displayName?: string;
+};
+
+export type UserData = {
+  createdAt: Date;
+  displayName: string;
+  email: string;
+};
+
+export const createUserProfileDocument = async (
+  userAuthentication: User,
+  additionalInformation = {} as AdditionalInformation
+): Promise<QueryDocumentSnapshot<UserData> | void> => {
   if (!userAuthentication) {
     alert("fail");
     return;
@@ -69,14 +93,17 @@ export const createUserProfileDocument = async (userAuthentication, additionalIn
     }
     
     catch (error) { 
-      console.log("error creating the user", error.message); 
+      console.log("error creating the user", error);
     }
   };
   
-  return userSnapshot;
+  return userSnapshot as QueryDocumentSnapshot<UserData>;
 };
 
-export const createAuthenticatedUserWithEmailAndPassword = async (email, password) => {
+export const createAuthenticatedUserWithEmailAndPassword = async (
+  email: string,
+  password: string
+) => {
   if (!email || !password) {
     return;
   };
@@ -84,7 +111,10 @@ export const createAuthenticatedUserWithEmailAndPassword = async (email, passwor
   return await createUserWithEmailAndPassword(authentication, email, password);
 };
 
-export const signInAuthenticatedUserWithEmailAndPassword = async (email, password) => {
+export const signInAuthenticatedUserWithEmailAndPassword = async (
+  email: string,
+  password: string
+) => {
   if (!email || !password) {
     return;
   };
@@ -94,9 +124,9 @@ export const signInAuthenticatedUserWithEmailAndPassword = async (email, passwor
 
 export const signOutUser = async () => await signOut(authentication);
 
-export const onAuthStateChangedListener = (callback) => onAuthStateChanged(authentication, callback);
+export const onAuthStateChangedListener = (callback: NextOrObserver<User>) => onAuthStateChanged(authentication, callback);
 
-export const getCurrentUser = () => {
+export const getCurrentUser = (): Promise<User | null> => {
   return new Promise((resolve, reject) => { // resolve == positive handle case, reject == negative handle case
     const unsubscribe = onAuthStateChanged(
       authentication,
