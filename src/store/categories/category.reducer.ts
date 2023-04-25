@@ -1,7 +1,7 @@
 import { AnyAction } from "redux";
 
-import { CATEGORIES_ACTION_TYPES, Category } from "./category.types";
-import { CategoryAction, fetchCategoriesStart, fetchCategoriesSuccess, fetchCategoriesFailed } from "./category.action";
+import { Category } from "./category.types";
+import { fetchCategoriesStart, fetchCategoriesSuccess, fetchCategoriesFailed } from "./category.action";
 
 // readonly is necessary because the values below must never be modified
 // this is because with reducers, you never modify the original state => must always spread over and create a new state
