@@ -1,6 +1,5 @@
 import { AnyAction } from "redux";
 
-import { USER_ACTON_TYPES } from "./user.types";
 import { signInFailed, signUpFailed, signOutFailed, signOutSuccess, signInSuccess } from "./user.action";
 import { UserData } from "../../utils/firebase/firebase.utils";
 

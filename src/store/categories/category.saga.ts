@@ -16,7 +16,7 @@ export function* fetchCategoriesAsync() {
   catch (error) {
     yield* put(fetchCategoriesFailed(error as Error));
   }
-}
+};
 
 export function* onFetchCategories() {
   // takeLatest() == if multiple of the same actions are received, take the latest one
