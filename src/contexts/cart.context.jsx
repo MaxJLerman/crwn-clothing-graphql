@@ -1,11 +1,11 @@
 import { createContext, useState, useEffect } from "react";
 
 const addCartItem = (cartItems, productToAdd) => {
-  const existingCartItem = cartItems.find((cartItem) => item.id === productToAdd.id);
+  const existingCartItem = cartItems.find((cartItem) => cartItem.id === productToAdd.id);
 
   if (existingCartItem) {
     return cartItems.map((cartItem) => {
-      cartItem.id === productToAdd.id
+      return cartItem.id === productToAdd.id
         ? {...cartItem, quantity: cartItem.quantity + 1 }
         : cartItem;
     });
@@ -17,7 +17,7 @@ const addCartItem = (cartItems, productToAdd) => {
 const removeCartItem = (cartItems, cartItemToRemove) => {
   // find cart item to remove
   const existingCartItem = cartItems.find((cartItem) => {
-    cartItem.id === cartItemToRemove.id;
+    return cartItem.id === cartItemToRemove.id;
   });
 
   // check if quantity is equal to 1, if it is removing the item from the cart
@@ -27,7 +27,7 @@ const removeCartItem = (cartItems, cartItemToRemove) => {
 
   // return back cartItems with matching cart item with reduced quantity
   return cartItems.map((cartItem) => {
-    cartItem.id === cartItemToRemove.id
+    return cartItem.id === cartItemToRemove.id
       ? { ...cartItem, quantity: cartItem.quantity - 1 }
       : cartItem;
   });
@@ -35,7 +35,7 @@ const removeCartItem = (cartItems, cartItemToRemove) => {
 
 const clearCartItem = (cartItems, cartItemToClear) => {
   cartItems.filter((cartItem) => {
-    cartItem.id !== cartItemToClear.id;
+    return cartItem.id !== cartItemToClear.id;
   });
 };
 
@@ -58,16 +58,16 @@ export const CartProvider = ({ children }) => {
 
   useEffect(() => {
     const newCartCount = cartItems.reduce((total, cartItem) => {
-      total + cartItem.quantity, 0
-    });
+      return total + cartItem.quantity;
+    }, 0);
 
     setCartCount(newCartCount);
   }, [cartItems]);
 
   useEffect(() => {
     const newCartTotal = cartItems.reduce((total, cartItem) => {
-      total + cartItem.quantity * cartItem.price, 0
-    });
+      return total + cartItem.quantity * cartItem.price;
+    }, 0);
 
     setCartTotal(newCartTotal);
   }, [cartItems]);
