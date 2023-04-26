@@ -1,5 +1,6 @@
 import { takeLatest, put, all, call } from "typed-redux-saga/macro";
 import { FirebaseError } from 'firebase/app';
+import { AuthError, AuthErrorCodes } from "firebase/auth";
 import { User } from "firebase/auth";
 
 import { USER_ACTON_TYPES } from "./user.types";
@@ -36,16 +37,9 @@ export function* signInWithGoogle() {
       }
 
       catch (error: unknown) {
-        // TypeScript won't allow specific error types to be caught, therefore the error type is checked inside the catch block
-        if (error instanceof FirebaseError) {
-          if (error.code === "auth/popup-closed-by-user") {
+        if ((error as AuthError).code === AuthErrorCodes.POPUP_CLOSED_BY_USER) {
             userCredential = yield* call(signInWithGoogleRedirect);
-          }
-        }
-
-        else {
-          console.log("couldn't handle error", error);
-        }
+        };
       }
     }
 

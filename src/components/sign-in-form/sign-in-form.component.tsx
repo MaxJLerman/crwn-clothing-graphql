@@ -1,6 +1,6 @@
 import { useState, FormEvent, ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
-import { FirebaseError } from 'firebase/app';
+import { AuthError, AuthErrorCodes } from 'firebase/auth';
 
 import { googleSignInStart, emailSignInStart } from '../../store/user/user.action';
 import FormInput from '../form-input/form-input.component';
@@ -39,27 +39,18 @@ const SignInForm = () => {
     }
 
     catch (error: unknown) {
-      // if the instanceof check doesn't work, remove it and try the commented out code below:
-      // const firebaseError = error as FirebaseError;
-      // switch (firebaseError.code) {
-      if (error instanceof FirebaseError) {
-        switch (error.code) {
-          case "auth/wrong-password":
-            alert("Incorrect password");
-            break;
+      switch ((error as AuthError).code) {
+        case AuthErrorCodes.INVALID_PASSWORD:
+          alert("Incorrect password");
+          break;
 
-          case "auth/user-not-found":
-            alert("User with entered email doesn't exist");
-            break;
+        case AuthErrorCodes.USER_DELETED:
+          alert("User with entered email doesn't exist");
+          break;
 
-          default:
-            console.log(error);
-        };
-      }
-
-      else {
-        console.log("couldn't handle error", error);
-      }
+        default:
+          console.log(error);
+      };
     };
   };
     
