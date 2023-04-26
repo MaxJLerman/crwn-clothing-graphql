@@ -42,6 +42,10 @@ export function* signInWithGoogle() {
             userCredential = yield* call(signInWithGoogleRedirect);
           }
         }
+
+        else {
+          console.log("couldn't handle error", error);
+        }
       }
     }
 

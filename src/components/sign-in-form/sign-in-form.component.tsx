@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, FormEvent, ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
+import { FirebaseError } from 'firebase/app';
 
 import { googleSignInStart, emailSignInStart } from '../../store/user/user.action';
 import FormInput from '../form-input/form-input.component';
 import Button from '../button/button.component';
 import { BUTTON_TYPE_CLASSES } from "../button/button.types";
-
 import { SignInContainer, ButtonsContainer } from './sign-in-form.styles';
 
 const defaultFormFields = {
@@ -26,11 +26,11 @@ const SignInForm = () => {
     }
 
     catch (error) { 
-      console.log("couldn't sign user in with google", error.message);
+      console.log("couldn't sign user in with google", error);
     }
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
@@ -38,23 +38,29 @@ const SignInForm = () => {
       resetFormFields();
     }
 
-    catch (error) {
-      switch (error.code) {
-        case "auth/wrong-password":
-          alert("Incorrect password");
-          break;
+    catch (error: unknown) {
+      if (error instanceof FirebaseError) {
+        switch (error.code) {
+          case "auth/wrong-password":
+            alert("Incorrect password");
+            break;
 
-        case "auth/user-not-found":
-          alert("User with entered email doesn't exist");
-          break;
+          case "auth/user-not-found":
+            alert("User with entered email doesn't exist");
+            break;
 
-        default:
-          console.log(error);
-      };
+          default:
+            console.log(error);
+        };
+      }
+
+      else {
+        console.log("couldn't handle error", error);
+      }
     };
   };
     
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormFields({ ...formFields, [name]: value });
   };
