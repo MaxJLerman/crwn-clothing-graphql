@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import Button from '../button/button.component';
-import * as t from "../button/button.types";
+import { BUTTON_TYPE_CLASSES } from "../button/button.types";
 import CartItem from '../cart-item/cart-item.component';
 import { selectCartItems } from '../../store/cart/cart.selector';
 import { selectIsCartOpen } from '../../store/cart/cart.selector';
@@ -32,7 +32,7 @@ const CartDropdown = () => {
             : ( <EmptyMessage>Your cart is empty</EmptyMessage> )
         }
       </CartItems>
-      <Button buttonType={t.DEFAULT_BUTTON} onClick={goToCheckoutHandler}>Go To Checkout</Button>
+      <Button buttonType={BUTTON_TYPE_CLASSES.DEFAULT_BUTTON} onClick={goToCheckoutHandler}>Go To Checkout</Button>
     </CartDropdownContainer>
   );
 }

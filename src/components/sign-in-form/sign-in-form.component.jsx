@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { googleSignInStart, emailSignInStart } from '../../store/user/user.action';
 import FormInput from '../form-input/form-input.component';
 import Button from '../button/button.component';
-import * as t from "../button/button.types";
+import { BUTTON_TYPE_CLASSES } from "../button/button.types";
 
 import { SignInContainer, ButtonsContainer } from './sign-in-form.styles';
 
@@ -67,9 +67,9 @@ const SignInForm = () => {
         <FormInput label="Email" name="email" type="email" onChange={handleChange} value={email} required />
         <FormInput label="Password" name="password" type="password" onChange={handleChange} value={password} required />
         <ButtonsContainer>
-          <Button type="submit" buttonType={t.DEFAULT_BUTTON} >Sign In</Button>
+          <Button type="submit" buttonType={BUTTON_TYPE_CLASSES.DEFAULT_BUTTON} >Sign In</Button>
           {/* Google button is not of type="submit" otherwise it tries to submit the form data used for signing in a user with email and password too */}
-          <Button type="button" buttonType={t.GOOGLE_BUTTON} onClick={signInWithGoogle}>Google Sign In</Button>
+          <Button type="button" buttonType={BUTTON_TYPE_CLASSES.GOOGLE_BUTTON} onClick={signInWithGoogle}>Google Sign In</Button>
         </ButtonsContainer>
       </form>
     </SignInContainer>
