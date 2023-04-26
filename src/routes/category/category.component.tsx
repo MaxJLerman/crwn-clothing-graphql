@@ -7,8 +7,12 @@ import Spinner from "../../components/spinner/spinner.component";
 import { selectCategoriesIsLoading, selectCategoriesMap } from '../../store/categories/category.selector';
 import { CategoryContainer, Title } from './category.styles';
 
+type CategoryRouteParams = {
+  category: string;
+};
+
 const Category = () => {
-  const { category } = useParams();
+  const { category } = useParams<keyof CategoryRouteParams>() as CategoryRouteParams; // keyof means parameters type received will be string (for category) or anything else inside the CategoryRouteParams type
   const categoriesMap = useSelector(selectCategoriesMap); // selectCategoriesMap is memoized, meaning the useSelector method works
   const isLoading = useSelector(selectCategoriesIsLoading);
   const [products, setProducts] = useState(categoriesMap[category]);
@@ -26,8 +30,10 @@ const Category = () => {
           ? <Spinner />
           : <CategoryContainer>
               {
-                  // only renders the products onto the screen if products has a value
-                  products && products.map((product) => <ProductCard key={product.id} product={product} />)
+                // only renders the products onto the screen if products has a value
+                products && products.map((product) => {
+                  return <ProductCard key={product.id} product={product} />
+                })
               }
             </CategoryContainer>
       }
