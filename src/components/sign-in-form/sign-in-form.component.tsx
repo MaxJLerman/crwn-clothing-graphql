@@ -39,6 +39,9 @@ const SignInForm = () => {
     }
 
     catch (error: unknown) {
+      // if the instanceof check doesn't work, remove it and try the commented out code below:
+      // const firebaseError = error as FirebaseError;
+      // switch (firebaseError.code) {
       if (error instanceof FirebaseError) {
         switch (error.code) {
           case "auth/wrong-password":
