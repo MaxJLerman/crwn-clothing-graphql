@@ -10,9 +10,8 @@ const getButton = (buttonType = BUTTON_TYPE_CLASSES.DEFAULT_BUTTON): typeof Defa
 }[buttonType]);
 
 export type ButtonProps = {
-  children: React.ReactNode;
   buttonType?: BUTTON_TYPE_CLASSES;
-  isLoading: boolean;
+  isLoading?: boolean;
 } & ButtonHTMLAttributes<HTMLButtonElement>; // allows us to pass any other HTMLButtonElement props e.g. type="submit"
 
 // FC == functional component => passing the ButtonProps as a generic type

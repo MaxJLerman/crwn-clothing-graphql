@@ -16,7 +16,9 @@ const CartDropdown = () => {
   const cartItems = useSelector(selectCartItems);
   const isCartOpen = useSelector(selectIsCartOpen);
   
-  const toggleIsCartOpen = () => dispatch(setIsCartOpen(!isCartOpen));
+  const toggleIsCartOpen = () => {
+    return dispatch(setIsCartOpen(!isCartOpen));
+  };
 
   const goToCheckoutHandler = () => {
     toggleIsCartOpen();
@@ -35,6 +37,6 @@ const CartDropdown = () => {
       <Button buttonType={BUTTON_TYPE_CLASSES.DEFAULT_BUTTON} onClick={goToCheckoutHandler}>Go To Checkout</Button>
     </CartDropdownContainer>
   );
-}
+};
 
 export default CartDropdown;
